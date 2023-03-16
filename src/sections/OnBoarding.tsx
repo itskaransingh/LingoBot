@@ -1,5 +1,5 @@
 
-import { SignIn, UserN } from '@/containers/auth'
+import { Auth, ConvSetup } from '@/containers/onboarding';
 import { Session } from 'next-auth/index'
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 const OnBoarding = ({session}:Props) => {
   return (
     <div className='flex justify-center items-center min-h-screen'>
-          {session ? <UserN /> : <SignIn /> }
+       {session?.user.username ? <ConvSetup/> : <Auth/>}
     </div>
   )
 }

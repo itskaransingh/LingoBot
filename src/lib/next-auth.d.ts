@@ -11,5 +11,6 @@ declare module "next-auth" {
     langtolearn: string;
     lang: string;
     isMalebot: boolean;
+    isSetupComplete: boolean;
   }
 }

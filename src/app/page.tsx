@@ -10,7 +10,7 @@ const page = async (props: Props) => {
   console.log(session)
   return (
     <>
-      {session?.user?.username ? <ChatApp /> : <OnBoarding session={session} />}
+      {session?.user?.isSetupComplete ? <ChatApp /> : <OnBoarding session={session} />}
     </>
   );
 };
