@@ -8,5 +8,8 @@ declare module "next-auth" {
   interface User {
     id: string;
     username?: string;
+    langtolearn: string;
+    lang: string;
+    isMalebot: boolean;
   }
 }
