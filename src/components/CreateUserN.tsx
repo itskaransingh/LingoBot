@@ -3,9 +3,10 @@ import { User } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import React, { useState } from "react";
 
-type Props = {};
+type Props = {
+};
 
-const CreateUserN = (props: Props) => {
+const CreateUserN = ({}: Props) => {
   const [username, setUsername] = useState("");
   const { data } = useSession();
   console.log(data);
@@ -37,11 +38,11 @@ const CreateUserN = (props: Props) => {
         onClick={() => senddata()}
         className="h-full w-full flex-[0.2] btn px-3 "
       >
-        Create
+        Save
       </button>
-      <button className="h-full flex-[0.2] btn px-3 " onClick={() => signOut()}>
+      {/* <button className="h-full flex-[0.2] btn px-3 " onClick={() => signOut()}>
         log out
-      </button>
+      </button> */}
     </div>
   );
 };
