@@ -1,5 +1,5 @@
 import { Session } from 'next-auth';
-import { SignIn, UserN } from '../auth'
+import { SignIn, UserSetup } from '../auth'
 
 type Props = {
     session?:Session|null
@@ -8,7 +8,7 @@ type Props = {
 const Auth = ({session}: Props) => {
   return (
     <>
-    {session ? <UserN /> : <SignIn /> }
+    {session ? <UserSetup /> : <SignIn /> }
     </>
   )
 }

@@ -1,20 +1,44 @@
+"use client"
+
 import { Combobox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import React from 'react'
+import React, { Fragment, useState } from 'react'
+import { useController } from 'react-hook-form'
 
-type Props = {}
+type Props = {
+    name: string,
+    control: any,
+    dataArr: any,
+}
 
-const ComboBox = (props: Props) => {
+const ComboBox = ({name,control,dataArr}: Props) => {
+    const [query, setQuery] = useState("");
+    const {
+      field: { value, onChange }
+    } = useController({name, control,defaultValue: dataArr[0]})
+
+  const filteredArr =
+  query === ""
+    ? dataArr
+    : dataArr.filter((filteredData:any) =>
+    filteredData.name
+          .toLowerCase()
+          .replace(/\s+/g, "")
+          .includes(query.toLowerCase().replace(/\s+/g, ""))
+      );
+
+
   return (
     <Combobox
-    value={langselected}
-    onChange={setlangselected}
+    value={value}
+    onChange={onChange}
+      
   >
     <div className="relative bg-base-300 ">
       <div className="relative rounded-2xl w-full cursor-default overflow-hidden  text-left shadow-md focus:outline-none focus-visible:ring-2    sm:text-sm">
         <Combobox.Input
           className="w-full  outline-none bg-base-300 border-none py-2 pl-3 pr-10 text-lg leading-5  focus:ring-0"
-          displayValue={(lang) => lang.name}
+          displayValue={(data:any) => data.name}
           onChange={(event) => setQuery(event.target.value)}
         />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -31,21 +55,21 @@ const ComboBox = (props: Props) => {
         leaveTo="opacity-0"
         afterLeave={() => setQuery("")}
       >
-        <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-base-200 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-          {filteredLanguages.length === 0 && query !== "" ? (
+        <Combobox.Options  className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-base-200 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          {filteredArr.length === 0 && query !== "" ? (
             <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
               Nothing found.
             </div>
           ) : (
-            filteredLanguages.map((lang) => (
+            filteredArr.map((data:any) => (
               <Combobox.Option
-                key={lang.id}
+                key={data.id}
                 className={({ active }) =>
                   `relative cursor-default select-none py-2 pl-10 pr-4 ${
                     active ? "bg-primary text-white" : ""
                   }`
                 }
-                value={lang}
+                value={data}
               >
                 {({ selected, active }) => (
                   <>
@@ -54,7 +78,7 @@ const ComboBox = (props: Props) => {
                         selected ? "font-medium" : "font-normal"
                       }`}
                     >
-                      {lang.name}
+                      {data.name}
                     </span>
                     {selected ? (
                       <span
