@@ -1,4 +1,4 @@
-import { Chats, Conversations } from "@/containers/chatapp";
+import { Chats, ConversationContainer } from "@/containers/chatapp";
 
 
 type Props = {};
@@ -6,8 +6,8 @@ type Props = {};
 const ChatApp = (props: Props) => {
   return (
     <div>
-      <Chats />
-      <Conversations />
+      {/* <Chats /> */}
+      <ConversationContainer />
     </div>
   );
 };
