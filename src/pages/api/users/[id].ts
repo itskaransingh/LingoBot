@@ -27,7 +27,7 @@ export default async function userHandler(
 const {username,...rest} = req.body
 if(username){
   try {
-    const usernexist = await prisma.user.findUnique({
+    const usernexist = await prisma.user.findFirst({
       where: {
         username: username as string,
       }
