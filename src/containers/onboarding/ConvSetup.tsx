@@ -18,7 +18,7 @@ const ConvSetup = ({}: Props) => {
   const { data } = useSession();
   console.log(data);
   const user = data?.user as User ;
-const {rs} = useAppContext()
+// const {rs} = useAppContext()
 
   const onSave = async (fdata:any) => {
      const {langtolearn,...otherdata} = fdata;
@@ -36,7 +36,7 @@ const {rs} = useAppContext()
     });
     const data = await res.json();
    if (data.success) {
-    rs()
+    window.location.reload();
    }
    else{
     console.log(data)

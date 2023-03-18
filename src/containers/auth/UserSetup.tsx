@@ -17,7 +17,7 @@ const UserN = ({}: Props) => {
   const [somethingWentWrong, setSomethingWentWrong] = useState(false)
   const { register, handleSubmit, control } = useForm();
   const { data } = useSession();
-const {rs} = useAppContext()
+// const {rs} = useAppContext()
   const user = data?.user as User;
 
 
@@ -37,7 +37,7 @@ const {rs} = useAppContext()
       });
       const data = await res.json();
       if(data.success){
-         rs()
+        window.location.reload();
       }
       else{
         console.log(data)

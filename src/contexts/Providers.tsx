@@ -6,15 +6,15 @@ import { createContext, useContext } from "react";
 const AppContext = createContext({});
 
 interface IState{
-  rs: () => void;
+  // rs: () => void;
 }
 
 const Providers = ({ children }: { children: any }) => {
-  const rs = () => {
-    window.location.reload();
-  };
+  // const rs = () => {
+    
+  // };
   const state:IState = {
-    rs,
+
   };
   return (
     <SessionProvider>
