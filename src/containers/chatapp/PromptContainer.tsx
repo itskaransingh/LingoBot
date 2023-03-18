@@ -20,9 +20,9 @@ const PromptContainer = (props: Props) => {
     console.log(data);
   };
   return (
-    <div className="fixed bottom-0 left-0 right-0">
+    <div className="fixed md:px-0 px-2.5 bottom-0 left-0 right-0">
       <div className="max-w-6xl flex flex-col gap-3 my-5 mx-auto">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto  mx-1 hide-scrollbar">
           <div className="grid overflow-x-auto py-2 w-max grid-flow-col gap-2">
             {someSent.map(({ id, name }) => (
               <div
