@@ -10,6 +10,7 @@ declare module "next-auth" {
     username?: string;
     langtolearn: string;
     lang: string;
+    botname: string;
     isMalebot: boolean;
     isSetupComplete: boolean;
   }

@@ -48,6 +48,7 @@ model User {
   emailVerified   DateTime?
   image           String?
   username        String?
+  botname         String?
   isSetupComplete Boolean   @default(false)
   langtolearn     String    @default("HIN")
   lang            String    @default("ENG")
