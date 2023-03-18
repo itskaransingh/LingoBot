@@ -5,15 +5,20 @@ import { useSession } from "next-auth/react";
 import { ComboBox, GenderRadio } from "@/components";
 import { User } from "next-auth";
 import { languages } from "@/utils/data";
+import { useState } from "react";
+import { useAppContext } from "@/contexts/Providers";
 
-type Props = {};
+type Props = {
+  
+};
 
-const ConvSetup = (props: Props) => {
+const ConvSetup = ({}: Props) => {
+  const [somethingWentWrong, setSomethingWentWrong] = useState(false)
   const { register, handleSubmit,control } = useForm();
   const { data } = useSession();
   console.log(data);
   const user = data?.user as User ;
-
+const {rs} = useAppContext()
 
   const onSave = async (fdata:any) => {
      const {langtolearn,...otherdata} = fdata;
@@ -30,7 +35,13 @@ const ConvSetup = (props: Props) => {
       }),
     });
     const data = await res.json();
-    console.log(data);
+   if (data.success) {
+    rs()
+   }
+   else{
+    console.log(data)
+    setSomethingWentWrong(true)
+   }
   };
 
   return (
@@ -38,6 +49,7 @@ const ConvSetup = (props: Props) => {
       <h1 className="text-2xl text-center">
         Lets Setup Your <br /> Conversation
       </h1>
+     {somethingWentWrong && <h2  className="text-xl text-red-500">Something Went Wrong</h2>}
       <form
         onSubmit={handleSubmit(onSave)}
         className="flex flex-col gap-5"

@@ -7,7 +7,7 @@ declare module "next-auth" {
 
   interface User {
     id: string;
-    username?: string;
+    username: string;
     langtolearn: string;
     lang: string;
     botname: string;

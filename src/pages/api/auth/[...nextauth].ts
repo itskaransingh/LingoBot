@@ -23,6 +23,11 @@ export const authOption:AuthOptions = {
         user: sessionUser,
       });
     },
+  },
+ events:{
+  updateUser() {
+    return Promise.resolve();
   }
+ }
 }
 export default NextAuth(authOption)

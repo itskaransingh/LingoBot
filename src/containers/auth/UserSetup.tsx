@@ -1,43 +1,62 @@
 "use client";
 import { ComboBox } from "@/components";
+import { useAppContext } from "@/contexts/Providers";
 import { languages } from "@/utils/data";
 import { User } from "next-auth";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+ 
 
-type Props = {};
+type Props = {
 
-const UserN = (props: Props) => {
+};
+
+const UserN = ({}: Props) => {
+  const [existingusern, setExistingusern] = useState(false)
+  const [somethingWentWrong, setSomethingWentWrong] = useState(false)
   const { register, handleSubmit, control } = useForm();
   const { data } = useSession();
-  console.log(data);
+const {rs} = useAppContext()
   const user = data?.user as User;
 
-  const onSave = async (fdata: any) => {
-    const { lang, ...otherdata } = fdata;
 
-    const res = await fetch(`/api/users/${user.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...otherdata,
-        lang: lang.name,
-      }),
-    });
-    const data = await res.json();
-    console.log(data);
+
+  const onSave = async (fdata: any) => {
+    const { lang, username } = fdata;
+   
+      const res = await fetch(`/api/users/${user.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          lang: lang.name,
+        }),
+      });
+      const data = await res.json();
+      if(data.success){
+         rs()
+      }
+      else{
+        console.log(data)
+        data.status === 500? setSomethingWentWrong(true):setExistingusern(true)
+       
+      }
+    
   };
 
   return (
     <div className="flex items-center gap-5 flex-col">
       <h1 className="text-2xl text-center">Setup Your Profile</h1>
+     {somethingWentWrong && <h2  className="text-xl text-red-500">Something Went Wrong</h2>}
       <form
         onSubmit={handleSubmit(onSave)}
-        className="flex flex-col items-center w-full justify-between gap-2.5"
+        className="flex flex-col items-start w-full justify-between gap-2.5"
       >
         <div className="">Create Your Username</div>
+        {existingusern && <div className="text-lg text-red-500">Username Already Exist</div>}
         <input
           {...register("username", { required: true })}
           type="text"
@@ -46,10 +65,10 @@ const UserN = (props: Props) => {
         />
         <div className="">Choose Your Native Language</div>
         <ComboBox control={control} name="lang" dataArr={languages} />
-      </form>
-      <button type="submit" className="h-full w-full flex-[0.2] btn px-3 ">
+      <button  value={'save'} type="submit" className="h-full w-full flex-[0.2] btn px-3 ">
         Save
       </button>
+      </form>
     </div>
   );
 };
@@ -60,3 +79,5 @@ const UserN = (props: Props) => {
 </button> */
 }
 export default UserN;
+
+

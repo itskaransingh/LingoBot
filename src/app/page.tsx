@@ -7,7 +7,8 @@ type Props = {};
 
 const page = async (props: Props) => {
   const session = await getServerSession(authOption);
-  console.log(session)
+
+ 
   return (
     <>
       {session?.user?.isSetupComplete ? <ChatApp /> : <OnBoarding session={session} />}
