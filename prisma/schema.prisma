@@ -42,17 +42,18 @@ model Session {
 }
 
 model User {
-  id              String    @id @default(cuid())
+  id              String         @id @default(cuid())
   name            String?
-  email           String?   @unique
+  email           String?        @unique
   emailVerified   DateTime?
   image           String?
-  username        String?   @unique
+  username        String?        @unique
   botname         String?
-  isSetupComplete Boolean   @default(false)
-  langtolearn     String    @default("HIN")
-  lang            String    @default("ENG")
-  isMalebot       Boolean   @default(true)
+  isSetupComplete Boolean        @default(false)
+  langtolearn     String         @default("HIN")
+  lang            String         @default("ENG")
+  isMalebot       Boolean        @default(true)
+  coversations    Conversation[]
   accounts        Account[]
   sessions        Session[]
 }
@@ -65,39 +66,40 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model BotChat {
-  id               String           @id @default(cuid())
-  isbotrespond     Boolean          @default(true)
-  inlanguage       String
-  transletedLang   String
-  reply            String
-  replyTranslation String
-  wordsinreply     WordsInBotChat[]
-  inreplyof        Chat?
-  createdAt DateTime @default(now())
+model Conversation {
+  id     String @id @default(cuid())
+  userid String
+  user   User   @relation(fields: [userid], references: [id], onDelete: Cascade)
+  chats  Chat[]
+
+  @@index([userid])
 }
 
 model Chat {
-  id           String  @id @default(cuid())
-  message      String
-  isbotrespond Boolean @default(false)
-  inlanguage   String
-  replyid      String  @unique
-  reply        BotChat @relation(fields: [replyid], references: [id])
-  createdAt DateTime @default(now())
-  
-  @@index([replyid])
+  id                 String           @id @default(cuid())
+  message            String
+  isbotrespond       Boolean          @default(false)
+  inlanguage         String
+  messageTranslation String?
+  transletedLang     String?
+  Conversation       Conversation?    @relation(fields: [conversationId], references: [id],onDelete: Cascade)
+  conversationId     String?
+  WordsInBotChat     WordsInBotChat[]
+  createdAt          DateTime         @default(now())
+
+  @@index([conversationId])
 }
 
 model WordsInBotChat {
-  chat    BotChat  @relation(fields: [chatid], references: [id])
   chatid  String
-  Word    Word     @relation(fields: [wordid], references: [id])
+  chat    Chat     @relation(fields: [chatid], references: [id])
   wordid  String
+  word    Word     @relation(fields: [wordid], references: [id])
   addedAt DateTime @default(now())
 
   @@id([wordid, chatid])
-  @@index([chatid, wordid])
+  @@index([chatid])
+  @@index([wordid])
 }
 
 model Word {
@@ -106,5 +108,5 @@ model Word {
   inlanguage     String
   translation    String
   translatedLang String
-  inChats          WordsInBotChat[]
+  inChats        WordsInBotChat[]
 }

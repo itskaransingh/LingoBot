@@ -1,8 +1,12 @@
 "use client";
+import { User } from "next-auth";
+import { useSession } from "next-auth/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-type Props = {};
+type Props = {
+ conv : any
+};
 
 const someSent = [
   { id: 1, name: "Lorem ipsum dolor sit " },
@@ -14,10 +18,32 @@ const someSent = [
   { id: 7, name: "Lorem ipsum dolor sit amet" },
 ];
 
-const PromptContainer = (props: Props) => {
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (data: any) => {
+const PromptContainer =  ({conv}: Props) => {
+  const { register, handleSubmit,reset } = useForm();
+  const { data: session } = useSession();
+  const user = session?.user as User
+  const onSubmit = async (data: any) => {
     console.log(data);
+    reset();
+ 
+    const reply = await fetch(`/api/chat`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        botname:user?.botname,
+        isMalebot:user?.isMalebot,
+        lang:user?.lang,
+        langtolearn:user?.langtolearn,
+        username:user?.username,
+        id:user?.id,
+        convid: conv?.id || 0,
+        prompt: data.prompt,
+      }),
+    });
+    const result = await reply.json();
+    console.log(result);
   };
   return (
     <div className="fixed md:px-0 px-2.5 bottom-0 left-0 right-0">

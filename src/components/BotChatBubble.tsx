@@ -5,7 +5,7 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 
 type Props = {
-    chat: botChat
+    chat: any
 }
 
 const BotChatBubble = ({chat}: Props) => {
@@ -21,20 +21,20 @@ const BotChatBubble = ({chat}: Props) => {
 
     <div onClick={()=> setTranslatePanelOpen(translatePanelOpen?false:true)}   className=" active:bg-base-200 md:cursor-pointer chat-bubble">
      {
-         chat.reply
+         chat.message
         }
     </div>
    {translatePanelOpen && <>
     <div className='absolute chat-bubble bottom-20  border  border-primary before:!left-1  '>
      {
-        chat?.wordsinreply?.map(({word},i)=>(
+        chat?.wordsinreply?.map((word,i)=>(
            <span key={i} className='hover:underline'>{word + ' '}</span>
             ))
         }
     </div>
     <div className='absolute chat-bubble top-20 before:!left-2 before:!top-1 !rounded-bl-2xl  !rounded-tl-none border  border-primary'>
     {
-        chat.replyTranslation
+        chat.messageTranslation
     }
     </div>
     </>}

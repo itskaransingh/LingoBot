@@ -3,7 +3,7 @@ import Image from 'next/image'
 import React from 'react'
 
 type Props = {
-chat : Chat
+chat : any
 }
 
 const ChatBubble = ({chat}: Props) => {
