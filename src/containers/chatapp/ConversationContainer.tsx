@@ -8,7 +8,7 @@ type Props = {}
 const ConversationContainer = (props: Props) => {
   const session =  getServerSession(authOption).then((session) => {
     if(session){
-      return session
+      return session 
     }else{
       return null
     }
