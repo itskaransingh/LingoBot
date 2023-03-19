@@ -4,11 +4,13 @@ import React from 'react'
 
 type Props = {
 chat : any
+key:number
 }
 
-const ChatBubble = ({chat}: Props) => {
+
+const ChatBubble = ({chat,key}: Props) => {
   return (
-    <div key={chat.id} className={`chat chat-end`}>
+    <div key={key} className={`chat chat-end`}>
     <div className="chat-image avatar">
       <div className="w-10 rounded-full">
       <Image alt='image' height={40} width={40} src="/images/photo-1534528741775-53994a69daeb.jpg" />

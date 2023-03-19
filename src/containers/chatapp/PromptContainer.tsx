@@ -1,61 +1,103 @@
 "use client";
 import { User } from "next-auth";
 import { useSession } from "next-auth/react";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 type Props = {
- conv : any
+  conv: any;
+  setloading: any;
 };
 
-const someSent = [
-  { id: 1, name: "Lorem ipsum dolor sit " },
-  { id: 2, name: "Lorem ipsum dolor sit amet" },
-  { id: 3, name: "Lorem ipsum dolor " },
-  { id: 4, name: "Lorem ipsum dolor sit amet" },
-  { id: 5, name: "Lorem ipsum dolor sit amet" },
-  { id: 6, name: "Lorem ipsum " },
-  { id: 7, name: "Lorem ipsum dolor sit amet" },
-];
 
-const PromptContainer =  ({conv}: Props) => {
-  const { register, handleSubmit,reset } = useForm();
+const PromptContainer = ({ conv,setloading }: Props) => {
+  const { register, handleSubmit, reset } = useForm();
+
+  const [starter, setStarter] = useState( [
+    {id:1,text:"How's your day?"},
+    {id:2,text: "Nice weather today!"},
+    {id:3,text:"What's new?"},
+    {id:4,text:"Any plans tonight?"},
+     {id:5,text:"How's work going?"},
+     {id:6,text:"Good to see you!"},
+     {id:7,text:"Long time no see!"},
+     {id:8,text:"How was the weekend?"},
+     {id:9,text:"Ready for the week?"},
+     {id:10,text:"What's on your mind?"},
+   ])
   const { data: session } = useSession();
-  const user = session?.user as User
+  const user = session?.user as User;
+
+
+  const conversations = localStorage.getItem("conversations")
+    ? JSON.parse(localStorage.getItem("conversations") || "[]")
+    : [];
+
   const onSubmit = async (data: any) => {
-    console.log(data);
+    conversations.push({
+      message: data.prompt,
+      sender: "user",
+      isbot: false,
+      messagetype: "text",
+    });
+
+    localStorage.setItem("conversations", JSON.stringify(conversations));
+    setloading(true)
+    console.log(conversations);
+
     reset();
- 
     const reply = await fetch(`/api/chat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        botname:user?.botname,
-        isMalebot:user?.isMalebot,
-        lang:user?.lang,
-        langtolearn:user?.langtolearn,
-        username:user?.username,
-        id:user?.id,
-        convid: conv?.id || 0,
+        botname: user?.botname,
+        isMalebot: user?.isMalebot,
+        lang: user?.lang,
+        langtolearn: user?.langtolearn,
+        username: user?.username,
+        id: user?.id,
+        convid: conv?.id,
         prompt: data.prompt,
       }),
     });
+
     const result = await reply.json();
-    console.log(result);
+    if (result.success) {
+      setloading(false)
+      conversations.push({
+        message: result.message,
+        isbot: true,
+        sender: user?.botname,
+        messagetype: "text",
+      });
+      localStorage.setItem("conversations", JSON.stringify(conversations));
+
+    } else {
+      setloading(false)
+
+      console.log(result);
+    }
   };
+
+  const sendStarter=(id:number,text:string)=>{
+    onSubmit({prompt:text})
+     setStarter(()=>starter.filter((starter)=>starter.id!== id))
+  }
+
   return (
     <div className="fixed md:px-0 px-2.5 bottom-0 left-0 right-0">
       <div className="max-w-6xl flex flex-col gap-3 my-5 mx-auto">
         <div className="overflow-x-auto  mx-1 hide-scrollbar">
           <div className="grid overflow-x-auto py-2 w-max grid-flow-col gap-2">
-            {someSent.map(({ id, name }) => (
+            {starter.map(({ id, text }) => (
               <div
+              onClick={()=>sendStarter(id,text)}
                 className="bg-primary hover:brightness-90 border border-black  box-border md:cursor-pointer  px-3 py-2 rounded-full"
                 key={id}
               >
-                <div>{name}</div>
+                <div>{text}</div>
               </div>
             ))}
           </div>

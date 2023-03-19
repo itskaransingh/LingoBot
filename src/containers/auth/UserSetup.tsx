@@ -37,6 +37,7 @@ const UserN = ({}: Props) => {
       });
       const data = await res.json();
       if(data.success){
+  localStorage.setItem("lang",JSON.stringify(lang))
         window.location.reload();
       }
       else{

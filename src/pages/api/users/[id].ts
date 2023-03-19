@@ -37,6 +37,9 @@ if(username){
         data: req.body,
         where: { id },
       });
+      await prisma.conversation.create({data:{
+        userid: id,
+      }})
       res.status(200).json({user:updatedUser,success:true,message:"User updated successfully",status:200});
     }
     else{

@@ -8,21 +8,20 @@ import { languages } from "@/utils/data";
 import { useState } from "react";
 import { useAppContext } from "@/contexts/Providers";
 
-type Props = {
-  
-};
+type Props = {};
 
 const ConvSetup = ({}: Props) => {
-  const [somethingWentWrong, setSomethingWentWrong] = useState(false)
-  const { register, handleSubmit,control } = useForm();
+  const [somethingWentWrong, setSomethingWentWrong] = useState(false);
+  const { register, handleSubmit, control } = useForm();
   const { data } = useSession();
   console.log(data);
-  const user = data?.user as User ;
-// const {rs} = useAppContext()
+  const user = data?.user as User;
+  // const {rs} = useAppContext()
 
-  const onSave = async (fdata:any) => {
-     const {langtolearn,...otherdata} = fdata;
-
+  const onSave = async (fdata: any) => {
+    const { langtolearn, ...otherdata } = fdata;
+    localStorage.setItem("langtolearn", JSON.stringify(langtolearn));
+    localStorage.setItem("conversations", JSON.stringify([]));
     const res = await fetch(`/api/users/${user.id}`, {
       method: "PUT",
       headers: {
@@ -30,18 +29,17 @@ const ConvSetup = ({}: Props) => {
       },
       body: JSON.stringify({
         ...otherdata,
-        isSetupComplete:true,
+        isSetupComplete: true,
         langtolearn: langtolearn.name,
       }),
     });
     const data = await res.json();
-   if (data.success) {
-    window.location.reload();
-   }
-   else{
-    console.log(data)
-    setSomethingWentWrong(true)
-   }
+    if (data.success) {
+      window.location.reload();
+    } else {
+      console.log(data);
+      setSomethingWentWrong(true);
+    }
   };
 
   return (
@@ -49,11 +47,10 @@ const ConvSetup = ({}: Props) => {
       <h1 className="text-2xl text-center">
         Lets Setup Your <br /> Conversation
       </h1>
-     {somethingWentWrong && <h2  className="text-xl text-red-500">Something Went Wrong</h2>}
-      <form
-        onSubmit={handleSubmit(onSave)}
-        className="flex flex-col gap-5"
-      >
+      {somethingWentWrong && (
+        <h2 className="text-xl text-red-500">Something Went Wrong</h2>
+      )}
+      <form onSubmit={handleSubmit(onSave)} className="flex flex-col gap-5">
         <div className="flex flex-col gap-2">
           <div className=" ">Name You Partner</div>
           <input
@@ -65,15 +62,15 @@ const ConvSetup = ({}: Props) => {
           />
         </div>
 
-        <GenderRadio name="isMalebot" control={control}/>
+        <GenderRadio name="isMalebot" control={control} />
 
         {/* Learning Language*/}
         <div className="flex flex-col gap-2.5">
           <div className="">What Language will you learn?</div>
-         <ComboBox dataArr={languages} name="langtolearn" control={control} />
+          <ComboBox dataArr={languages} name="langtolearn" control={control} />
         </div>
 
-        <button className="btn" value={'save'} type="submit">
+        <button className="btn" value={"save"} type="submit">
           SAVE
         </button>
       </form>
