@@ -64,3 +64,47 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model BotChat {
+  id               String           @id @default(cuid())
+  isbotrespond     Boolean          @default(true)
+  inlanguage       String
+  transletedLang   String
+  reply            String
+  replyTranslation String
+  wordsinreply     WordsInBotChat[]
+  inreplyof        Chat?
+  createdAt DateTime @default(now())
+}
+
+model Chat {
+  id           String  @id @default(cuid())
+  message      String
+  isbotrespond Boolean @default(false)
+  inlanguage   String
+  replyid      String  @unique
+  reply        BotChat @relation(fields: [replyid], references: [id])
+  createdAt DateTime @default(now())
+  
+  @@index([replyid])
+}
+
+model WordsInBotChat {
+  chat    BotChat  @relation(fields: [chatid], references: [id])
+  chatid  String
+  Word    Word     @relation(fields: [wordid], references: [id])
+  wordid  String
+  addedAt DateTime @default(now())
+
+  @@id([wordid, chatid])
+  @@index([chatid, wordid])
+}
+
+model Word {
+  id             String           @id @default(cuid())
+  word           String
+  inlanguage     String
+  translation    String
+  translatedLang String
+  inChats          WordsInBotChat[]
+}
