@@ -7,7 +7,7 @@ const SignIn  = (props: Props) => {
   return (
     <div className="flex flex-col gap-5  items-center">
     <div className='text-5xl font-semibold '>
-      WeChat
+      LingoBot
     </div>
     <SignInBtn />
     </div>
