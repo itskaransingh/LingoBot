@@ -19,7 +19,7 @@ const ConversationContainer = async(props: Props) => {
   return (
    <div>
  <Navbar botname={session?.user.botname as string} />
-    <Conversations chats={chats} />
+    <Conversations  />
    </div>
   )
 }
