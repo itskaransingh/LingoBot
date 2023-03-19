@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import PromptContainer from './PromptContainer'
 type Props = {
-  chats: any;
+  chats?: any;
 };
 
 

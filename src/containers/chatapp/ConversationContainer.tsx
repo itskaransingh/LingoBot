@@ -8,14 +8,14 @@ type Props = {}
 const ConversationContainer = async(props: Props) => {
   const session = await getServerSession(authOption)
   
-  const chats = await prisma?.conversation.findFirst({
-    where: {
-       userid: session?.user?.id,
-    },
-    include:{
-      chats:true,
-    }
-  })
+  // const chats = await prisma?.conversation.findFirst({
+  //   where: {
+  //      userid: session?.user?.id,
+  //   },
+  //   include:{
+  //     chats:true,
+  //   }
+  // })
   return (
    <div>
  <Navbar botname={session?.user.botname as string} />
