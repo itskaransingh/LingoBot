@@ -6,13 +6,15 @@ import Conversations from './Conversations'
 type Props = {}
 
 const ConversationContainer = (props: Props) => {
-  const session =  getServerSession(authOption).then((session) => {
+  let session ; 
+   getServerSession(authOption).then((session) => {
     if(session){
-      return session 
+      session =  session
     }else{
       return null
     }
   })
+
   
   // const chats = await prisma?.conversation.findFirst({
   //   where: {
