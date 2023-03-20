@@ -5,17 +5,9 @@ import Conversations from './Conversations'
 
 type Props = {}
 
-const ConversationContainer = (props: Props) => {
-  let session ; 
-   getServerSession(authOption).then((session) => {
-    if(session){
-      session =  session
-    }else{
-      return null
-    }
-  })
+const ConversationContainer = async(props: Props) => {
+  let session = await getServerSession(authOption)
 
-  
   // const chats = await prisma?.conversation.findFirst({
   //   where: {
   //      userid: session?.user?.id,
@@ -24,10 +16,15 @@ const ConversationContainer = (props: Props) => {
   //     chats:true,
   //   }
   // })
+  
+
+
   return (
-   <div>
- <Navbar botname={session?.user.botname as string} />
+   <div >
+    <div className='flex w-full h-screen overflow-y-auto flex-col-reverse '>
     <Conversations  />
+    </div>
+ <Navbar botname={session?.user.botname as string} />
    </div>
   )
 }

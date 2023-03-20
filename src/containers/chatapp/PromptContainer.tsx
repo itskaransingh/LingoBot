@@ -34,6 +34,8 @@ const PromptContainer = ({ conv,setloading }: Props) => {
     : [];
 
   const onSubmit = async (data: any) => {
+
+
     conversations.push({
       message: data.prompt,
       sender: "user",
@@ -51,6 +53,7 @@ const PromptContainer = ({ conv,setloading }: Props) => {
       headers: {
         "Content-Type": "application/json",
       },
+      
       body: JSON.stringify({
         botname: user?.botname,
         isMalebot: user?.isMalebot,
@@ -70,10 +73,11 @@ const PromptContainer = ({ conv,setloading }: Props) => {
         message: result.message,
         isbot: true,
         sender: user?.botname,
+        translation: result.translation,
         messagetype: "text",
       });
       localStorage.setItem("conversations", JSON.stringify(conversations));
-
+  
     } else {
       setloading(false)
 

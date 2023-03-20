@@ -10,7 +10,7 @@ type Props = {
 const Navbar = ({botname}: Props) => {
 
   return (
-    <nav className=" sticky top-0 z-50 bg-base-300  ">
+    <nav className=" fixed top-0 left-0 right-0 z-50 bg-base-300  ">
       <div className="navbar max-w-6xl px-5 md:px-0 mx-auto">
         <div className="navbar-start  ">
           <Image src={'./svg/icons/backarrow.svg'} alt='back arrow' className="" height={20} width={20} />
