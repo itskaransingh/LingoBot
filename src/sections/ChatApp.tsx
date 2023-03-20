@@ -7,6 +7,7 @@ const ChatApp = (props: Props) => {
   return (
     <div>
       {/* <Chats /> */}
+       {/* @ts-expect-error Server Component */}
       <ConversationContainer />
     </div>
   );
