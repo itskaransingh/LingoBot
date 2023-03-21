@@ -27,8 +27,8 @@ const Conversations = ({ chats }: Props) => {
   }, []);
 
   return (
-    <div className="md:max-w-6xl    md:px-0 px-4 py-24 pb-60 md:mx-auto">
-      <div className="flex  flex-col gap-5">
+    <div className="lg:max-w-6xl    lg:px-0 md:px-8 px-4 py-24 pb-60 lg::mx-auto">
+      <div className="">
         { 
         conversations?.map((chat: any, i: number) => (
           <>

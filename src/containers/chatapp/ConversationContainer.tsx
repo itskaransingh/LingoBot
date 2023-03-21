@@ -20,7 +20,7 @@ const ConversationContainer = async(props: Props) => {
 
 
   return (
-   <div className='flex w-full h-full overflow-y-auto justify-end  flex-col-reverse ' >
+   <div className='flex w-full min-h-screen overflow-y-auto justify-end  flex-col-reverse ' >
 
     <Conversations  />
    
