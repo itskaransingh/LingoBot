@@ -8,18 +8,24 @@ type Props = {
     chat?: any
     key?: number,
     isloading?:boolean
+    ref?:any
+    islast?:boolean
 }
 
-const BotChatBubble = ({chat,key,isloading}: Props) => {
+const BotChatBubble = ({chat,islast,ref,key,isloading}: Props) => {
     const [translatePanelOpen, setTranslatePanelOpen] = useState(false)
+
+
+ 
+
   return (
-    <div key={key} className={`chat  chat-start`}>
+    <div ref={islast?ref:null} key={key} className={`chat  chat-start`}>
 
     <div className='relative'>
 
     <div onClick={()=> setTranslatePanelOpen(translatePanelOpen?false:true)}   className=" active:bg-base-200 md:cursor-pointer chat-bubble">
      {
-        !isloading? chat?.message: 'Loading...' + ' '
+        !isloading? chat?.message: 'Loading...' + ' ' 
         }
     </div>
    {
@@ -31,7 +37,7 @@ const BotChatBubble = ({chat,key,isloading}: Props) => {
             ))
         }
     </div> */}
-    <div className='absolute chat-bubble top-20 before:!left-2 before:!top-1 !rounded-bl-2xl  !rounded-tl-none border  border-primary'>
+    <div className='absolute z-10 chat-bubble top-20 before:!left-2 before:!top-1 !rounded-bl-2xl  !rounded-tl-none border  border-primary'>
     {
         chat?.translation
     }

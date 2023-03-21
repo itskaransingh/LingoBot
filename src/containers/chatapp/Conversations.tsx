@@ -1,45 +1,61 @@
-'use client'
+"use client";
 import { BotChatBubble, ChatBubble } from "@/components";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-
-import PromptContainer from './PromptContainer'
+import PromptContainer from "./PromptContainer";
 type Props = {
   chats?: any;
 };
 
+const Conversations = ({ chats }: Props) => {
+  const [conversations, setconversations] = useState(
+    JSON.parse(localStorage.getItem("conversations") || "[]")
+  );
+  const [loading, setLoading] = useState(false);
 
-const Conversations = ({chats}: Props) => {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const [conversations, setconversations] = useState(JSON.parse(localStorage.getItem("conversations") || "[]"))
-  const [loading, setLoading] = useState(false)
-  
-useEffect(() => {
-  setconversations(JSON.parse(localStorage.getItem("conversations") || "[]"))
-//   // if(conversations[-1]?.sender !== "user"){
-//   //   setLoading(true)
-//   //   // setTimeout(() => {
-//   //   //   setLoading(false)
-//   //   // }, 2000);
-//   // }
-  
-}, [loading])
+  useEffect(() => {
+    setconversations(JSON.parse(localStorage.getItem("conversations") || "[]"));
+    if (!messagesEndRef.current || !loading) return;
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [loading, messagesEndRef.current]);
 
-  
+  useEffect(() => {
+    if (!messagesEndRef.current) return;
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
   return (
-    <div className="max-w-6xl    md:px-0 px-4 py-24 pb-60 mx-auto">
-      <div className="flex flex-col gap-5">
-        {conversations?.map((chat:any,i:number) => (
+    <div className="md:max-w-6xl    md:px-0 px-4 py-24 pb-60 md:mx-auto">
+      <div className="flex  flex-col gap-5">
+        { 
+        conversations?.map((chat: any, i: number) => (
           <>
-         { chat.isbot?(
-             <BotChatBubble  key={i} chat={chat} />
-               ):(
-                <ChatBubble key={i} chat={chat} />
-               )}
+            {chat.isbot ? (
+              <BotChatBubble
+                islast={conversations.length -1   === i}
+                ref={messagesEndRef}
+                key={i}
+                chat={chat}
+              />
+            ) : (
+              <ChatBubble
+                islast={conversations.length - 1 === i}
+                ref={messagesEndRef}
+                key={i}
+                chat={chat}
+              />
+            )}
           </>
         ))}
-      { loading?  <BotChatBubble isloading={loading}  />: <></>}
+        {loading ? (
+          <div ref={messagesEndRef}>
+            <BotChatBubble isloading={loading} />
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
       <PromptContainer setloading={setLoading} conv={chats} />
     </div>

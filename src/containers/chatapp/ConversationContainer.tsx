@@ -20,10 +20,10 @@ const ConversationContainer = async(props: Props) => {
 
 
   return (
-   <div >
-    <div className='flex w-full h-screen overflow-y-auto flex-col-reverse '>
+   <div className='flex w-full h-full overflow-y-auto justify-end  flex-col-reverse ' >
+
     <Conversations  />
-    </div>
+   
  <Navbar botname={session?.user.botname as string} />
    </div>
   )

@@ -5,12 +5,14 @@ import React from 'react'
 type Props = {
 chat : any
 key:number
+islast?:boolean
+ref?:any
 }
 
 
-const ChatBubble = ({chat,key}: Props) => {
+const ChatBubble = ({chat,key,islast,ref}: Props) => {
   return (
-    <div key={key} className={`chat chat-end`}>
+    <div ref={islast?ref:null} key={key} className={`chat chat-end`}>
 
     <div className="chat-bubble">
      {
