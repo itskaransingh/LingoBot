@@ -19,7 +19,7 @@ const BotChatBubble = ({chat,islast,ref,key,isloading}: Props) => {
  
 
   return (
-    <div ref={islast?ref:null} key={key} className={`chat my-5  chat-start`}>
+    <div ref={islast?ref:null} key={key} className={`chat my-5    chat-start`}>
 
     <div className='relative '>
 
