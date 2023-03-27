@@ -43,7 +43,7 @@ const ConvSetup = ({}: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex  flex-col gap-10">
       <h1 className="text-2xl text-center">
         Lets Setup Your <br /> Conversation
       </h1>
@@ -52,6 +52,10 @@ const ConvSetup = ({}: Props) => {
       )}
       <form onSubmit={handleSubmit(onSave)} className="flex flex-col gap-5">
         <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2.5">
+          <div className="">What Language will you learn?</div>
+          <ComboBox dataArr={languages} name="langtolearn" control={control} />
+        </div>
           <div className=" ">Name You Partner</div>
           <input
             {...register("botname", { required: true })}
@@ -65,10 +69,6 @@ const ConvSetup = ({}: Props) => {
         <GenderRadio name="isMalebot" control={control} />
 
         {/* Learning Language*/}
-        <div className="flex flex-col gap-2.5">
-          <div className="">What Language will you learn?</div>
-          <ComboBox dataArr={languages} name="langtolearn" control={control} />
-        </div>
 
         <button className="btn" value={"save"} type="submit">
           SAVE

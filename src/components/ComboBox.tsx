@@ -34,10 +34,10 @@ const ComboBox = ({name,control,dataArr}: Props) => {
     onChange={onChange}
       
   >
-    <div className="relative bg-base-300 ">
-      <div className="relative rounded-2xl w-full cursor-default overflow-hidden  text-left shadow-md focus:outline-none focus-visible:ring-2    sm:text-sm">
+    <div className="relative input-bordered input !px-0 rounded-md bg-base-100 ">
+      <div className="relative rounded-md py-1 w-full cursor-default overflow-hidden  text-left shadow-sm  focus:outline-none focus-visible:ring-2    sm:text-sm">
         <Combobox.Input
-          className="w-full  outline-none bg-base-300 border-none py-2 pl-3 pr-10 text-lg leading-5  focus:ring-0"
+          className="w-full  outline-none bg-base-100 border-none py-2 pl-3 pr-10 text-lg leading-5  focus:ring-0"
           displayValue={(data:any) => data.name}
           onChange={(event) => setQuery(event.target.value)}
         />

@@ -8,7 +8,7 @@ type Props = {
 
 const OnBoarding = ({session}:Props) => {
   return (
-    <div className='flex justify-center items-center min-h-screen'>
+    <div className='flex justify-center  items-center min-h-screen'>
        {session?.user.username ? <ConvSetup  /> : <Auth  session={session}/>}
     </div>
   )

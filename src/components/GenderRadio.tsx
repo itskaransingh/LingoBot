@@ -24,7 +24,7 @@ const GenderRadio = ({name,control}: Props) => {
           <RadioGroup.Label className={""}>
             Choose You Conversation Partner
           </RadioGroup.Label>
-    <div className="flex gap-5">
+    <div className="flex gap-2.5">
     <RadioGroup.Option
       value={true}
     refName="isMalebot" 
