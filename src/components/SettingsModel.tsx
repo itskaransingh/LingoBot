@@ -21,7 +21,7 @@ const SettingsModel = (props: Props) => {
 
   const onSave = async (fdata: any) => {
     const { langtolearn, ...otherdata } = fdata;
-    localStorage.setItem("langtolearn", langtolearn.name);
+    localStorage?.setItem("langtolearn", langtolearn.name);
     // localStorage.setItem("conversations", JSON.stringify([]));
     const res = await fetch(`/api/users/${user.id}`, {
       method: "PUT",
