@@ -22,7 +22,7 @@ const GenderRadio = ({name,control}: Props) => {
           className={"flex flex-col gap-2.5"}
         >
           <RadioGroup.Label className={""}>
-            Choose You Conversation Partner
+            Choose Your Conversation Partner
           </RadioGroup.Label>
     <div className="flex gap-2.5">
     <RadioGroup.Option
