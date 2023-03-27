@@ -50,8 +50,8 @@ model User {
   username        String?        @unique
   botname         String?
   isSetupComplete Boolean        @default(false)
-  langtolearn     String         @default("HIN")
-  lang            String         @default("ENG")
+  langtolearn     String         @default("Hindi")
+  lang            String         @default("English")
   isMalebot       Boolean        @default(true)
   coversations    Conversation[]
   accounts        Account[]

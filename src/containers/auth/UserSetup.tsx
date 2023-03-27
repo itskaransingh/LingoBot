@@ -23,7 +23,7 @@ const UserN = ({}: Props) => {
 
 
   const onSave = async (fdata: any) => {
-    const { lang, username } = fdata;
+    const { username } = fdata;
    
       const res = await fetch(`/api/users/${user.id}`, {
         method: "PUT",
@@ -32,12 +32,11 @@ const UserN = ({}: Props) => {
         },
         body: JSON.stringify({
           username,
-          lang: lang.name,
         }),
       });
       const data = await res.json();
       if(data.success){
-  localStorage.setItem("lang",JSON.stringify(lang))
+  // localStorage.setItem("lang",JSON.stringify(lang))
         window.location.reload();
       }
       else{
@@ -64,8 +63,8 @@ const UserN = ({}: Props) => {
           placeholder="Username"
           className="input  input-bordered w-full "
         />
-        <div className="">Choose Your Native Language</div>
-        <ComboBox control={control} name="lang" dataArr={languages} />
+        {/* <div className="">Choose Your Native Language</div>
+        <ComboBox control={control} name="lang" dataArr={languages} /> */}
       <button  value={'save'} type="submit" className="h-full w-full flex-[0.2] btn px-3 ">
         Save
       </button>

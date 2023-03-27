@@ -9,13 +9,14 @@ type Props = {
     name: string,
     control: any,
     dataArr: any,
+    defaultValue:any
 }
 
-const ComboBox = ({name,control,dataArr}: Props) => {
+const ComboBox = ({name,control,dataArr,defaultValue}: Props) => {
     const [query, setQuery] = useState("");
     const {
       field: { value, onChange }
-    } = useController({name, control,defaultValue: dataArr[0]})
+    } = useController({name, control,defaultValue})
 
   const filteredArr =
   query === ""
@@ -34,8 +35,8 @@ const ComboBox = ({name,control,dataArr}: Props) => {
     onChange={onChange}
       
   >
-    <div className="relative input-bordered input !px-0 rounded-md bg-base-100 ">
-      <div className="relative rounded-md py-1 w-full cursor-default overflow-hidden  text-left shadow-sm  focus:outline-none focus-visible:ring-2    sm:text-sm">
+    <div className="relative input-bordered input !px-0 rounded-lg bg-base-100 ">
+      <div className="relative rounded-md py-0.5 w-full cursor-default overflow-hidden  text-left shadow-sm  focus:outline-none focus-visible:ring-2    sm:text-sm">
         <Combobox.Input
           className="w-full  outline-none bg-base-100 border-none py-2 pl-3 pr-10 text-lg leading-5  focus:ring-0"
           displayValue={(data:any) => data.name}

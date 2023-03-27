@@ -1,3 +1,4 @@
+import { SettingsModel, WelcomeModel } from "@/components";
 import Providers from "@/contexts/Providers";
 import "./globals.css";
 
@@ -14,7 +15,11 @@ export default function RootLayout({
       */}
       <head />
       <body className="bg-base-300">
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <SettingsModel />
+          <WelcomeModel />          
+        </Providers>
       </body>
     </html>
   );

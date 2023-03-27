@@ -20,7 +20,7 @@ const ConvSetup = ({}: Props) => {
 
   const onSave = async (fdata: any) => {
     const { langtolearn, ...otherdata } = fdata;
-    localStorage.setItem("langtolearn", JSON.stringify(langtolearn));
+    localStorage.setItem("langtolearn", langtolearn.name);
     localStorage.setItem("conversations", JSON.stringify([]));
     const res = await fetch(`/api/users/${user.id}`, {
       method: "PUT",
@@ -54,7 +54,7 @@ const ConvSetup = ({}: Props) => {
         <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-2.5">
           <div className="">What Language will you learn?</div>
-          <ComboBox dataArr={languages} name="langtolearn" control={control} />
+          <ComboBox defaultValue={languages[0]} dataArr={languages} name="langtolearn" control={control} />
         </div>
           <div className=" ">Name You Partner</div>
           <input
