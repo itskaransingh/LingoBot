@@ -17,8 +17,8 @@ const SettingsModel = (props: Props) => {
   const { data } = useSession();
   // console.log(data);
   const user = data?.user as User;
-  const currentLangToLearn = localStorage.getItem("langtolearn");
-
+  const currentLangToLearn = typeof window !== 'undefined' ?localStorage.getItem("langtolearn") : "English"
+  
   const onSave = async (fdata: any) => {
     const { langtolearn, ...otherdata } = fdata;
     localStorage?.setItem("langtolearn", langtolearn.name);
