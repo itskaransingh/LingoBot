@@ -12,7 +12,7 @@ ref?:any
 
 const ChatBubble = ({chat,key,islast,ref}: Props) => {
   return (
-    <div ref={islast?ref:null} key={key} className={`chat chat-end`}>
+    <div ref={islast?ref:null} key={key} className={`chat chat-end transition-all duration-200 ease-in`}>
 
     <div className="chat-bubble">
      {
