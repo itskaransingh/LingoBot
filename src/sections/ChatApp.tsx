@@ -1,4 +1,4 @@
-import { Chats, ConversationContainer } from "@/containers/chatapp";
+import { ConversationContainer } from "@/containers/chatapp";
 
 
 type Props = {};
@@ -6,8 +6,6 @@ type Props = {};
 const ChatApp = (props: Props) => {
   return (
     <div>
-      {/* <Chats /> */}
-       {/* @ts-expect-error Server Component */}
       <ConversationContainer />
     </div>
   );

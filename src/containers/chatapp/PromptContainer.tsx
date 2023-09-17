@@ -1,4 +1,6 @@
 "use client";
+import { starters } from "@/utils/data";
+import { getls, setls } from "@/utils/helpers/ls";
 import { User } from "next-auth";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
@@ -9,51 +11,40 @@ type Props = {
   setloading: any;
 };
 
-
-const PromptContainer = ({ conv,setloading }: Props) => {
+const PromptContainer = ({ conv, setloading }: Props) => {
   const { register, handleSubmit, reset } = useForm();
 
-  const [starter, setStarter] = useState( [
-    {id:1,text:"How's your day?"},
-    {id:2,text: "Nice weather today!"},
-    {id:3,text:"What's new?"},
-    {id:4,text:"Any plans tonight?"},
-     {id:5,text:"How's work going?"},
-     {id:6,text:"Good to see you!"},
-     {id:7,text:"Long time no see!"},
-     {id:8,text:"How was the weekend?"},
-     {id:9,text:"Ready for the week?"},
-     {id:10,text:"What's on your mind?"},
-   ])
+  const [starter, setStarter] = useState(starters);
   const { data: session } = useSession();
   const user = session?.user as User;
 
-
-  const conversations = localStorage.getItem("conversations")
-    ? JSON.parse(localStorage.getItem("conversations") || "[]")
-    : [];
+  const rawconversations = getls("rawconversations") || [];
+  const conversations = getls("conversations") || [];
 
   const onSubmit = async (data: any) => {
-
-
+    rawconversations.push({
+      role: "user",
+      content: data.message,
+    });
     conversations.push({
-      message: data.prompt,
+      message: data.message,
       sender: "user",
       isbot: false,
       messagetype: "text",
     });
+    setls("rawconversations", rawconversations);
+    setls("conversations", conversations);
 
-    localStorage.setItem("conversations", JSON.stringify(conversations));
-    setloading(true)
+    setloading(true);
     console.log(conversations);
-
     reset();
+
     const reply = await fetch(`/api/chat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      
+
       body: JSON.stringify({
         botname: user?.botname,
         isMalebot: user?.isMalebot,
@@ -61,14 +52,17 @@ const PromptContainer = ({ conv,setloading }: Props) => {
         langtolearn: user?.langtolearn,
         username: user?.username,
         id: user?.id,
-        convid: conv?.id,
-        prompt: data.prompt,
+        conversations: rawconversations,
       }),
     });
 
     const result = await reply.json();
     if (result.success) {
-      setloading(false)
+      setloading(false);
+      rawconversations.push({
+        role: "assistant",
+        content: result.rawreply,
+      });
       conversations.push({
         message: result.message,
         isbot: true,
@@ -76,28 +70,29 @@ const PromptContainer = ({ conv,setloading }: Props) => {
         translation: result.translation,
         messagetype: "text",
       });
-      localStorage.setItem("conversations", JSON.stringify(conversations));
-  
+      setls("rawconversations", rawconversations);
+      console.log(rawconversations);
+      setls("conversations", conversations);
     } else {
-      setloading(false)
+      setloading(false);
 
       console.log(result);
     }
   };
 
-  const sendStarter=(id:number,text:string)=>{
-    onSubmit({prompt:text})
-     setStarter(()=>starter.filter((starter)=>starter.id!== id))
-  }
+  const sendStarter = (id: number, text: string) => {
+    onSubmit({ message: text });
+    setStarter(() => starter.filter((starter) => starter.id !== id));
+  };
 
   return (
-    <div className="fixed z-30 md:px-0 px-2.5 bottom-0 left-0 right-0">
+    <div className="fixed z-30 xl:px-0 px-2.5 bottom-0 left-0 right-0">
       <div className="max-w-6xl flex flex-col gap-3 my-5 mx-auto">
         <div className="overflow-x-auto  mx-1 hide-scrollbar">
           <div className="grid overflow-x-auto py-2 w-max grid-flow-col gap-2">
             {starter.map(({ id, text }) => (
               <div
-              onClick={()=>sendStarter(id,text)}
+                onClick={() => sendStarter(id, text)}
                 className="bg-primary hover:brightness-90 border border-black  box-border md:cursor-pointer  px-3 py-2 rounded-full"
                 key={id}
               >
@@ -114,7 +109,7 @@ const PromptContainer = ({ conv,setloading }: Props) => {
           <input
             className="w-full input bg-base-300  outline-none rounded-none"
             type="text"
-            {...register("prompt", { required: true })}
+            {...register("message", { required: true })}
           />
           <button className="btn rounded-none" type="submit">
             <svg

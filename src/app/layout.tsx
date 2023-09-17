@@ -1,4 +1,4 @@
-import { SettingsModel, WelcomeModel } from "@/components";
+import { SettingsModel } from "@/components";
 import Providers from "@/contexts/Providers";
 import "./globals.css";
 
@@ -9,16 +9,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme='dark'>
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
       <head />
-      <body className="bg-base-300">
+      <body className="bg-base-300 lg:px-5">
         <Providers>
           {children}
           <SettingsModel />
-          <WelcomeModel />          
         </Providers>
       </body>
     </html>

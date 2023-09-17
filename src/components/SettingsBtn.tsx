@@ -1,5 +1,6 @@
 'use client'
 
+import { setls } from '@/utils/helpers/ls'
 import { signOut } from 'next-auth/react'
 import Image from 'next/image'
 import React from 'react'
@@ -24,17 +25,25 @@ function SettingsBtn({}: Props) {
               tabIndex={0}
               className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
             >
-              {/* <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li> */}
+              <li onClick={()=> {
+                 setls("rawconversations", []);
+                 setls("conversations", []);
+                 window.location.reload();
+              }}>
+               <a >
+
+                  Clear conversation
+               </a>
+      
+              </li>
               <li>
-              <label htmlFor="my-modal-4" >Settings</label>
+              <label htmlFor="settingsModal" >Settings</label>
               </li>
               <li onClick={()=> signOut()}  >
-                <a>Logout</a>
+                <a >
+
+                Logout
+                </a>
               </li>
             </ul>
           </div>

@@ -11,6 +11,20 @@ const languages = [
   { id: 10, name: "Italian" },
 ];
 
+
+const starters = [
+  {id:1,text:"How's your day?"},
+  {id:2,text: "Nice weather today!"},
+  {id:3,text:"What's new?"},
+  {id:4,text:"Any plans tonight?"},
+   {id:5,text:"How's work going?"},
+   {id:6,text:"Good to see you!"},
+   {id:7,text:"Long time no see!"},
+   {id:8,text:"How was the weekend?"},
+   {id:9,text:"Ready for the week?"},
+   {id:10,text:"What's on your mind?"},
+ ]
+
 const somechats = [
   {
     id: 1,
@@ -131,4 +145,4 @@ const messages = [
 export type botChat = typeof somechats[1];
 export type Chat = typeof somechats[0];
 
-export { languages, somechats };
+export { languages, somechats,starters };

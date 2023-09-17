@@ -6,10 +6,9 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import ComboBox from "./ComboBox";
+import { setls } from "@/utils/helpers/ls";
 
 type Props = {};
-//  {/* The button to open modal */}
-// <label htmlFor="my-modal-4" className="btn">open modal</label>
 
 const SettingsModel = (props: Props) => {
   const [somethingWentWrong, setSomethingWentWrong] = useState(false);
@@ -17,7 +16,7 @@ const SettingsModel = (props: Props) => {
   const { data } = useSession();
   // console.log(data);
   const user = data?.user as User;
-  const currentLangToLearn = typeof window !== 'undefined' ?localStorage.getItem("langtolearn") : "English"
+  const currentLangToLearn = typeof window !== 'undefined' ? localStorage.getItem("langtolearn") : "English"
   
   const onSave = async (fdata: any) => {
     const { langtolearn, ...otherdata } = fdata;
@@ -35,6 +34,8 @@ const SettingsModel = (props: Props) => {
     });
     const data = await res.json();
     if (data.success) {
+      setls("rawconversations", []);
+      setls("conversations", []);
       window.location.reload();
     } else {
       console.log(data);
@@ -45,11 +46,11 @@ const SettingsModel = (props: Props) => {
 
   return (
     <>
-      <input type="checkbox" id="my-modal-4" className="modal-toggle" />
+      <input type="checkbox" id="settingsModal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box relative">
           <label
-            htmlFor="my-modal-4"
+            htmlFor="settingsModal"
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >
             ✕
