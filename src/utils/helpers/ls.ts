@@ -13,7 +13,7 @@ const setls = (key: string, value: any) => {
 
 const getls = (key: string) => {
   if (typeof localStorage !== "undefined") {
-    return JSON.parse(localStorage.getItem(key) || "");
+    return JSON.parse(localStorage.getItem(key) || "{}");
   } else {
     return null;
   }
