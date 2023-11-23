@@ -21,7 +21,7 @@ const Conversations = ({ chats }: Props) => {
   const { data: session } = useSession();
   const user = session?.user as User;
 
-  const lastmessage = conversations.at(-1);
+  const lastmessage = conversations?.at(-1);
 
   const rawconversations = getls("rawconversations") || [];
 
