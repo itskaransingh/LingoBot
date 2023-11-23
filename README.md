@@ -9,3 +9,8 @@ Tools & Tech:
 - Next Auth
 - Prisma
 - Planet Scale
+
+
+![lingobot (1)](https://github.com/itskaransingh/LingoBot/assets/112791089/6bda6f81-c7ba-4ced-a034-432bf9b057bc)
+
+
