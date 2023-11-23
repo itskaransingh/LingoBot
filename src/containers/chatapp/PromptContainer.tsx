@@ -57,27 +57,23 @@ const PromptContainer = ({ conv, setloading }: Props) => {
     });
 
     const result = await reply.json();
-    if (result.success) {
+
       setloading(false);
       rawconversations.push({
         role: "assistant",
-        content: result.rawreply,
+        content: result?.rawreply,
       });
       conversations.push({
         message: result.message,
         isbot: true,
         sender: user?.botname,
-        translation: result.translation,
+        translation: result?.translation,
         messagetype: "text",
       });
       setls("rawconversations", rawconversations);
       console.log(rawconversations);
       setls("conversations", conversations);
-    } else {
-      setloading(false);
 
-      console.log(result);
-    }
   };
 
   const sendStarter = (id: number, text: string) => {

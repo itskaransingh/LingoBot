@@ -54,8 +54,7 @@ export default async function Conversationhandler(
           .json({
             status: 400,
             success: false,
-            message: "some issue occoured",
-            error: error.message,
+            message: "OpenAI Error: " + error.message,
             stack: error,
             messages:messages,
           });

@@ -57,7 +57,10 @@ const Conversations = ({ chats }: Props) => {
           }),
         });
 
+        
+
         const result = await reply.json();
+        console.log({result});
         if (result.success) {
           setLoading(false);
           rawconversations.push({
@@ -77,7 +80,6 @@ const Conversations = ({ chats }: Props) => {
         } else {
           setLoading(false);
 
-          console.log(result);
         }
       } else {
         setLoading(false);
